@@ -2,6 +2,16 @@
 
 Uses Naver's API to fetch leftover vaccine reservation list
 
+# Config
+
+Create a `config.ini` file in the same directory as the Python script:
+
+```ini
+[DEFAULT]
+api-token = abcdefg...
+user-key = hijklmnop...
+```
+
 # Usage
 
 1. Fetch the request body of the area you want to search through.
