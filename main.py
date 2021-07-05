@@ -5,13 +5,26 @@ import sys
 import time
 import requests
 import pprint
+import configparser
 
+from pushover import Client
 from blessed import Terminal
 
 # Global vars
-run_count = 0       # DO NOT CHANGE
-term = Terminal()   # DO NOT CHANGE
-time_delay = 10     # Use values above 3 seconds
+run_count = 0                           # DO NOT CHANGE
+term = Terminal()                       # DO NOT CHANGE
+time_delay = 10                         # Use values above 3 seconds
+notifications_enabled = True            # Notification control
+local_notifications_enabled = True      # Local notification control
+
+if notifications_enabled:
+    # Read configuration file
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    api_token = config['DEFAULT']['api-token']
+    user_key = config['DEFAULT']['user-key']
+
+    client = Client(user_key=user_key, api_token=api_token)
 
 
 def main():
@@ -20,8 +33,11 @@ def main():
     # Clear screen
     term.clear()
 
+    # Send notification that script is starting
+    if notifications_enabled:
+        client.send_message("Script is starting up!", priority=-1, title="Starting...")
+
     with term.cbreak():
-        val = ''
         while True:
             if run_count == 0:
                 print("Starting in {} seconds...".format(time_delay))
@@ -71,8 +87,14 @@ def parse_vaccine_data(data):
 
         if vaccine_count > 0:
             pprint.pprint(location)
-            play_alert(duration=1)
-            play_message("FOUND FREE VACCINES")
+
+            if notifications_enabled:
+                client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
+                                    .format(location['name'], location['roadAddress'], vaccine_count))
+
+            if local_notifications_enabled:
+                play_alert(duration=1)
+                play_message("FOUND FREE VACCINES")
         else:
             print("{} - run {} - {} has no vaccines...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                                                                run_count, location['name']))
