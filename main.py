@@ -81,12 +81,14 @@ def parse_local_response_data():
 
 def parse_vaccine_data(data):
     locations = data[0]['data']['rests']['businesses']['items']
+    found_vaccines = False
 
     for location in locations:
         vaccine_count = location['vaccineQuantity']['totalQuantity']
 
         if vaccine_count > 0:
             pprint.pprint(location)
+            found_vaccines = True
 
             if notifications_enabled:
                 client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
@@ -95,9 +97,9 @@ def parse_vaccine_data(data):
             if local_notifications_enabled:
                 play_alert(duration=1)
                 play_message("FOUND FREE VACCINES")
-        else:
-            print("{} - run {} - {} has no vaccines...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-                                                               run_count, location['name']))
+
+    if not found_vaccines:
+        print("{} - run {} had no vaccines...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), run_count))
 
 
 def fetch_vaccine_info():
