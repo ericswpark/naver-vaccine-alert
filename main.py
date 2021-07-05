@@ -36,7 +36,7 @@ def main():
             elif val.lower() == 'q':
                 break
             elif val.lower() == 'r' or not val:
-                print() # Skip to newline to get rid of prompt
+                print()     # Skip to newline to get rid of prompt
                 fetch_vaccine_info()
                 run_count += 1
 
