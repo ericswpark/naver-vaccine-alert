@@ -1,5 +1,4 @@
 import ast
-import curses
 import json
 import os
 import sys
