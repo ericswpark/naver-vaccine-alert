@@ -128,13 +128,15 @@ def fetch_vaccine_info():
 # Play alert
 # Duration in seconds, frequency in Hz
 def play_alert(duration=3, freq=2000):
-    for i in range(0, 5):
-        os.system('play -nq synth {} sine {}'.format(duration / 5, freq))
-        time.sleep(0.2)
+    if sys.platform != "win32":
+        for i in range(0, 5):
+            os.system('play -nq synth {} sine {}'.format(duration / 5, freq))
+            time.sleep(0.2)
 
 
 def play_message(message):
-    os.system('say "{}"'.format(message))
+    if sys.platform == "darwin":
+        os.system('say "{}"'.format(message))
 
 
 if __name__ == '__main__':
