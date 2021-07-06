@@ -102,8 +102,14 @@ def parse_vaccine_data(data):
 
 def trigger_pushover_notification(location, vaccine_count):
     if pushover_notifications_enabled:
-        client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
-                            .format(location['name'], location['roadAddress'], vaccine_count))
+        # Check vaccine type
+        vaccine_type = location['vaccineQuantity']['list'][0]['vaccineType']
+        if vaccine_type == '화이자':
+            client.send_message("Found Pfizer vaccines at {}!\nAddress: {}\nVaccine count: {}"
+                                .format(location['name'], location['roadAddress'], vaccine_count), priority=1)
+        else:
+            client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
+                                .format(location['name'], location['roadAddress'], vaccine_count))
 
 
 def trigger_local_notification():
