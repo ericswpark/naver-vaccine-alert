@@ -28,8 +28,8 @@ pushover_notifications_enabled = (config['DEFAULT']['pushover-notifications'].lo
 local_notifications_enabled = (config['DEFAULT']['local-notifications'].lower() == "true")
 
 if pushover_notifications_enabled:
-    api_token = config['DEFAULT']['api-token']
-    user_key = config['DEFAULT']['user-key']
+    api_token = config['pushover']['api-token']
+    user_key = config['pushover']['user-key']
 
     client = Client(user_key=user_key, api_token=api_token)
 
