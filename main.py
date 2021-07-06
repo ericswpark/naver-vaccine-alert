@@ -117,8 +117,8 @@ def trigger_pushover_notification(location, vaccine_count):
             client.send_message("Found Pfizer vaccines at {}!\nAddress: {}\nVaccine count: {}"
                                 .format(location['name'], location['roadAddress'], vaccine_count), priority=1)
         else:
-            client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
-                                .format(location['name'], location['roadAddress'], vaccine_count))
+            client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}\nVaccine type: {}"
+                                .format(location['name'], location['roadAddress'], vaccine_count, vaccine_type))
 
 
 def trigger_local_notification():
