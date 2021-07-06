@@ -19,7 +19,7 @@ term = Terminal()
 config = configparser.ConfigParser()
 
 if not os.path.exists('config.ini'):
-    print("The configuration file does not exist. Please refer to the README and create a configuration file.")
+    logging.error("The configuration file does not exist. Please refer to the README and create a configuration file.")
     exit(1)
 
 config.read('config.ini')
