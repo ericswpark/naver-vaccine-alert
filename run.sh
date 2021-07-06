@@ -10,9 +10,9 @@ then
     # Install dependencies
     pip3 install -r requirements.txt
 
-    python main.py | tee -a log.txt
+    python main.py
 else
     # Directory exists, run immediately
     . venv/bin/activate
-    python main.py | tee -a log.txt
+    python main.py
 fi
