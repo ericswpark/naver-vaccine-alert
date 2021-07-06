@@ -61,7 +61,7 @@ def main():
         while True:
             if run_count == 0:
                 logger.info("Starting in {} seconds...".format(time_delay))
-                logger.info("Press q to quit, down/up arrow keys to adjust time delay, or r to refresh")
+                logger.info("Press q to quit, down/up arrow keys or t to adjust time delay, or r to refresh")
 
             val = term.inkey(timeout=time_delay)
 
@@ -71,6 +71,8 @@ def main():
                 adjust_time_delay(-1)
             elif val.lower() == 'q':
                 break
+            elif val.lower() == 't':
+                adjust_time_prompt()
             elif val.lower() == 'r' or not val:
                 fetch_vaccine_info()
                 run_count += 1
@@ -84,6 +86,11 @@ def adjust_time_delay(adj):
         logger.info("Increased time delay by {}, new time delay: {}".format(adj, time_delay))
     else:
         logger.info("Decreased time delay by {}, new time delay: {}".format(-adj, time_delay))
+
+
+def adjust_time_prompt():
+    adj = input("Enter adjustment by seconds (positive integers to increase, negative integers to decrease): ")
+    adjust_time_delay(adj)
 
 
 def parse_local_response_data():
