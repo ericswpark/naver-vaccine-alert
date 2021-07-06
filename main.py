@@ -142,7 +142,11 @@ def fetch_vaccine_info():
             file.flush()
 
         # Do things with the data
-        parse_vaccine_data(r.json())
+        try:
+            parse_vaccine_data(r.json())
+        except Exception as e:
+            print_log("Warning: an error occurred while trying to parse the output.")
+            print(e)
     else:
         print_log("There was a problem fetching from Naver's API on this run.")
 
