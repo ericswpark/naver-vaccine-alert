@@ -44,8 +44,8 @@ def main():
         while True:
             if run_count == 0:
                 print("Starting in {} seconds...".format(time_delay))
+                print_help()
 
-            print_help()
             val = term.inkey(timeout=time_delay)
 
             if val.name == 'KEY_UP':
@@ -55,7 +55,6 @@ def main():
             elif val.lower() == 'q':
                 break
             elif val.lower() == 'r' or not val:
-                print()     # Skip to newline to get rid of prompt
                 fetch_vaccine_info()
                 run_count += 1
 
