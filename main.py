@@ -81,9 +81,9 @@ def adjust_time_delay(adj):
 
     time_delay += adj
     if adj > 0:
-        logger.info("\nIncreased time delay by {}, new time delay: {}".format(adj, time_delay))
+        logger.info("Increased time delay by {}, new time delay: {}".format(adj, time_delay))
     else:
-        logger.info("\nDecreased time delay by {}, new time delay: {}".format(-adj, time_delay))
+        logger.info("Decreased time delay by {}, new time delay: {}".format(-adj, time_delay))
 
 
 def parse_local_response_data():
