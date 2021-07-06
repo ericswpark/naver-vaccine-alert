@@ -90,6 +90,7 @@ def parse_vaccine_data(data):
         vaccine_count = location['vaccineQuantity']['totalQuantity']
 
         if vaccine_count > 0:
+            print_log("Found vaccine, location data:")
             pprint.pprint(location)
             found_vaccines = True
 
@@ -97,7 +98,15 @@ def parse_vaccine_data(data):
             trigger_local_notification()
 
     if not found_vaccines:
-        print("{} - run {} had no vaccines...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), run_count))
+        print_log("No vaccines found on this run.")
+
+
+def get_current_time():
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+
+def print_log(msg):
+    print("{} - run {}: {}".format(get_current_time(), run_count, msg))
 
 
 def trigger_pushover_notification(location, vaccine_count):
@@ -135,7 +144,7 @@ def fetch_vaccine_info():
         # Do things with the data
         parse_vaccine_data(r.json())
     else:
-        print("There was a problem fetching from Naver's API.\n")
+        print_log("There was a problem fetching from Naver's API on this run.")
 
 
 # Play alert
