@@ -43,7 +43,7 @@ ch.setLevel(logging.DEBUG)
 fh = logging.FileHandler('log.txt')
 fh.setLevel(logging.DEBUG)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %p %I:%M:%S')
 ch.setFormatter(formatter)
 fh.setFormatter(formatter)
 
