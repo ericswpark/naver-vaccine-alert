@@ -6,6 +6,7 @@ import time
 import requests
 import pprint
 import configparser
+import logging
 
 from pushover import Client
 from blessed import Terminal
@@ -33,6 +34,22 @@ if pushover_notifications_enabled:
 
     client = Client(user_key=user_key, api_token=api_token)
 
+# Set up logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fh = logging.FileHandler('log.txt')
+fh.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+
+logger.addHandler(ch)
+logger.addHandler(fh)
+
 
 def main():
     global run_count, time_delay
@@ -43,8 +60,8 @@ def main():
     with term.cbreak():
         while True:
             if run_count == 0:
-                print("Starting in {} seconds...".format(time_delay))
-                print_help()
+                logger.info("Starting in {} seconds...".format(time_delay))
+                logger.info("Press q to quit, down/up arrow keys to adjust time delay, or r to refresh")
 
             val = term.inkey(timeout=time_delay)
 
@@ -59,19 +76,14 @@ def main():
                 run_count += 1
 
 
-def print_help():
-    print("Press q to quit, down/up arrow keys to adjust time delay, or r to refresh", end='')
-    sys.stdout.flush()
-
-
 def adjust_time_delay(adj):
     global time_delay
 
     time_delay += adj
     if adj > 0:
-        print("\nIncreased time delay by {}, new time delay: {}".format(adj, time_delay))
+        logger.info("\nIncreased time delay by {}, new time delay: {}".format(adj, time_delay))
     else:
-        print("\nDecreased time delay by {}, new time delay: {}".format(-adj, time_delay))
+        logger.info("\nDecreased time delay by {}, new time delay: {}".format(-adj, time_delay))
 
 
 def parse_local_response_data():
@@ -105,7 +117,7 @@ def get_current_time():
 
 
 def print_log(msg):
-    print("{} - run {}: {}".format(get_current_time(), run_count, msg))
+    logger.info("{} - run {}: {}".format(get_current_time(), run_count, msg))
 
 
 def trigger_pushover_notification(location, vaccine_count):
@@ -145,7 +157,7 @@ def fetch_vaccine_info():
             parse_vaccine_data(r.json())
         except Exception as e:
             print_log("Warning: an error occurred while trying to parse the output.")
-            print(e)
+            logger.error(e)
     else:
         print_log("There was a problem fetching from Naver's API on this run.")
 
