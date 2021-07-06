@@ -109,7 +109,7 @@ def parse_vaccine_data(data):
             trigger_local_notification()
 
     if not found_vaccines:
-        print_log("No vaccines found on this run.")
+        print_log("No vaccines found.")
 
 
 def print_log(msg):
