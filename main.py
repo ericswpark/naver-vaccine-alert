@@ -61,7 +61,7 @@ def main():
         while True:
             if run_count == 0:
                 logger.info("Starting in {} seconds...".format(time_delay))
-                logger.info("Press q to quit, down/up arrow keys or t to adjust time delay, or r to refresh")
+                print_help()
 
             val = term.inkey(timeout=time_delay)
 
@@ -73,9 +73,19 @@ def main():
                 break
             elif val.lower() == 't':
                 adjust_time_prompt()
+            elif val.lower() == 'h':
+                print_help()
             elif val.lower() == 'r' or not val:
                 fetch_vaccine_info()
                 run_count += 1
+
+
+def print_help():
+    logger.info("\t↑/↓ - Adjust time delay by 1 second")
+    logger.info("\tr - Refresh manually once")
+    logger.info("\tt - Set new time delay")
+    logger.info("\th - Show this help menu")
+    logger.info("\tq - Quit")
 
 
 def adjust_time_delay(adj):
