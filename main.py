@@ -72,7 +72,7 @@ def main():
             elif val.lower() == 'q':
                 break
             elif val.lower() == 't':
-                adjust_time_prompt()
+                set_time_delay()
             elif val.lower() == 'h':
                 print_help()
             elif val.lower() == 'r' or not val:
@@ -98,9 +98,11 @@ def adjust_time_delay(adj):
         logger.info("Decreased time delay by {}, new time delay: {}".format(-adj, time_delay))
 
 
-def adjust_time_prompt():
-    adj = input("Enter adjustment by seconds (positive integers to increase, negative integers to decrease): ")
-    adjust_time_delay(adj)
+def set_time_delay():
+    global time_delay
+
+    time_delay = input("Enter new time delay in seconds (integers only): ")
+    logger.info("New time delay: {}".format(time_delay))
 
 
 def parse_local_response_data():
