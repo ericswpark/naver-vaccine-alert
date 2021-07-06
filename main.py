@@ -97,12 +97,16 @@ def parse_vaccine_data(data):
                 client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
                                     .format(location['name'], location['roadAddress'], vaccine_count))
 
-            if local_notifications_enabled:
-                play_alert(duration=1)
-                play_message("FOUND FREE VACCINES")
+            trigger_local_notification()
 
     if not found_vaccines:
         print("{} - run {} had no vaccines...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), run_count))
+
+
+def trigger_local_notification():
+    if local_notifications_enabled:
+        play_alert(duration=1)
+        play_message("Found vaccines")
 
 
 def fetch_vaccine_info():
