@@ -101,7 +101,7 @@ def adjust_time_delay(adj):
 def set_time_delay():
     global time_delay
 
-    time_delay = input("Enter new time delay in seconds (integers only): ")
+    time_delay = int(input("Enter new time delay in seconds (integers only): "))
     logger.info("New time delay: {}".format(time_delay))
 
 
