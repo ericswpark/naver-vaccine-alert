@@ -112,12 +112,8 @@ def parse_vaccine_data(data):
         print_log("No vaccines found on this run.")
 
 
-def get_current_time():
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-
-
 def print_log(msg):
-    logger.info("{} - run {}: {}".format(get_current_time(), run_count, msg))
+    logger.info("Run {}: {}".format(run_count, msg))
 
 
 def trigger_pushover_notification(location, vaccine_count):
