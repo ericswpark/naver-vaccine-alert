@@ -11,16 +11,23 @@ from pushover import Client
 from blessed import Terminal
 
 # Global vars
-run_count = 0                           # DO NOT CHANGE
-term = Terminal()                       # DO NOT CHANGE
-time_delay = 10                         # Use values above 3 seconds
-notifications_enabled = True            # Notification control
-local_notifications_enabled = True      # Local notification control
+run_count = 0
+term = Terminal()
 
-if notifications_enabled:
-    # Read configuration file
-    config = configparser.ConfigParser()
-    config.read('config.ini')
+# Read from configuration
+config = configparser.ConfigParser()
+
+if not os.path.exists('config.ini'):
+    print("The configuration file does not exist. Please refer to the README and create a configuration file.")
+    exit(1)
+
+config.read('config.ini')
+
+time_delay = int(config['DEFAULT']['time-delay'])
+pushover_notifications_enabled = (config['DEFAULT']['pushover-notifications'].lower() == "true")
+local_notifications_enabled = (config['DEFAULT']['local-notifications'].lower() == "true")
+
+if pushover_notifications_enabled:
     api_token = config['DEFAULT']['api-token']
     user_key = config['DEFAULT']['user-key']
 
@@ -32,10 +39,6 @@ def main():
 
     # Clear screen
     term.clear()
-
-    # Send notification that script is starting
-    if notifications_enabled:
-        client.send_message("Script is starting up!", priority=-1, title="Starting...")
 
     with term.cbreak():
         while True:
@@ -90,7 +93,7 @@ def parse_vaccine_data(data):
             pprint.pprint(location)
             found_vaccines = True
 
-            if notifications_enabled:
+            if pushover_notifications_enabled:
                 client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
                                     .format(location['name'], location['roadAddress'], vaccine_count))
 

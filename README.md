@@ -8,6 +8,11 @@ Create a `config.ini` file in the same directory as the Python script:
 
 ```ini
 [DEFAULT]
+pushover-notifications = true       # Pushover notifications
+local-notifications = true          # Local notifications using sox and macOS say
+time-delay = 3                      # Time delay between runs
+
+[pushover]                          # Only required if pushover-notifications is enabled
 api-token = abcdefg...
 user-key = hijklmnop...
 ```
