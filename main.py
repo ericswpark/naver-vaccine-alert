@@ -93,14 +93,17 @@ def parse_vaccine_data(data):
             pprint.pprint(location)
             found_vaccines = True
 
-            if pushover_notifications_enabled:
-                client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
-                                    .format(location['name'], location['roadAddress'], vaccine_count))
-
+            trigger_pushover_notification(location, vaccine_count)
             trigger_local_notification()
 
     if not found_vaccines:
         print("{} - run {} had no vaccines...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), run_count))
+
+
+def trigger_pushover_notification(location, vaccine_count):
+    if pushover_notifications_enabled:
+        client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}"
+                            .format(location['name'], location['roadAddress'], vaccine_count))
 
 
 def trigger_local_notification():
