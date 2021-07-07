@@ -118,7 +118,7 @@ def parse_vaccine_data(data):
 
         if vaccine_count > 0:
             print_log("Found vaccine, location data:")
-            pprint.pprint(location)
+            print_log(pprint.pformat(location))
             found_vaccines = True
 
             trigger_pushover_notification(location, vaccine_count)
