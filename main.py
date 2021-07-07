@@ -57,7 +57,12 @@ def main():
     # Clear screen
     term.clear()
 
-    with term.cbreak():
+    # Set up cbreak
+    ctx = None
+
+    try:
+        ctx = term.cbreak()
+        ctx.__enter__()
         while True:
             if run_count == 0:
                 logger.info("Starting in {} seconds...".format(time_delay))
@@ -68,12 +73,17 @@ def main():
             if val.lower() == 'q':
                 break
             elif val.lower() == 't':
+                ctx.__exit__(None, None, None)
                 set_time_delay()
+                ctx.__enter__()
             elif val.lower() == 'h':
                 print_help()
             elif val.lower() == 'r' or not val:
                 fetch_vaccine_info()
                 run_count += 1
+    finally:
+        if ctx is not None:
+            ctx.__exit__(None, None, None)
 
 
 def print_help():
