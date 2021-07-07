@@ -75,6 +75,7 @@ def main():
             elif val.lower() == 't':
                 ctx.__exit__(None, None, None)
                 set_time_delay()
+                ctx = term.cbreak()
                 ctx.__enter__()
             elif val.lower() == 'h':
                 print_help()
