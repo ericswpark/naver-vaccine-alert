@@ -65,11 +65,7 @@ def main():
 
             val = term.inkey(timeout=time_delay)
 
-            if val.name == 'KEY_UP':
-                adjust_time_delay(1)
-            elif val.name == 'KEY_DOWN':
-                adjust_time_delay(-1)
-            elif val.lower() == 'q':
+            if val.lower() == 'q':
                 break
             elif val.lower() == 't':
                 set_time_delay()
@@ -81,21 +77,10 @@ def main():
 
 
 def print_help():
-    logger.info("\t↑/↓ - Adjust time delay by 1 second")
     logger.info("\tr - Refresh manually once")
     logger.info("\tt - Set new time delay")
     logger.info("\th - Show this help menu")
     logger.info("\tq - Quit")
-
-
-def adjust_time_delay(adj):
-    global time_delay
-
-    time_delay += adj
-    if adj > 0:
-        logger.info("Increased time delay by {}, new time delay: {}".format(adj, time_delay))
-    else:
-        logger.info("Decreased time delay by {}, new time delay: {}".format(-adj, time_delay))
 
 
 def set_time_delay():
