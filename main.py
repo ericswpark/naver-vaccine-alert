@@ -132,7 +132,7 @@ def parse_vaccine_data(data):
             trigger_pushover_notification(location, vaccine_count)
 
     if not found_vaccines:
-        print_log("No vaccines found.")
+        print_log("No vaccines found. Parsed {} locations.".format(len(locations)))
 
 
 def print_log(msg):
