@@ -3,8 +3,6 @@
 import ast
 import json
 import os
-import sys
-import time
 import requests
 import pprint
 import configparser
@@ -28,7 +26,6 @@ config.read('config.ini')
 
 time_delay = int(config['DEFAULT']['time-delay'])
 pushover_notifications_enabled = (config['DEFAULT']['pushover-notifications'].lower() == "true")
-local_notifications_enabled = (config['DEFAULT']['local-notifications'].lower() == "true")
 
 if pushover_notifications_enabled:
     api_token = config['pushover']['api-token']
@@ -128,7 +125,6 @@ def parse_vaccine_data(data):
             found_vaccines = True
 
             trigger_pushover_notification(location, vaccine_count)
-            trigger_local_notification()
 
     if not found_vaccines:
         print_log("No vaccines found.")
@@ -148,12 +144,6 @@ def trigger_pushover_notification(location, vaccine_count):
         else:
             client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}\nVaccine type: {}"
                                 .format(location['name'], location['roadAddress'], vaccine_count, vaccine_type))
-
-
-def trigger_local_notification():
-    if local_notifications_enabled:
-        play_alert(duration=1)
-        play_message("Found vaccines")
 
 
 def fetch_vaccine_info():
@@ -181,20 +171,6 @@ def fetch_vaccine_info():
             traceback.print_exc()
     else:
         print_log("There was a problem fetching from Naver's API on this run.")
-
-
-# Play alert
-# Duration in seconds, frequency in Hz
-def play_alert(duration=3, freq=2000):
-    if sys.platform != "win32":
-        for i in range(0, 5):
-            os.system('play -nq synth {} sine {}'.format(duration / 5, freq))
-            time.sleep(0.2)
-
-
-def play_message(message):
-    if sys.platform == "darwin":
-        os.system('say "{}"'.format(message))
 
 
 if __name__ == '__main__':
