@@ -17,7 +17,11 @@ def parse_response_data():
 
     for location in locations:
         location_name = location['name']
-        vaccine_count = location['vaccineQuantity']['totalQuantity']
+        try:
+            vaccine_count = location['vaccineQuantity']['totalQuantity']
+        except TypeError:
+            # No vaccines in this location
+            vaccine_count = 0
         hospitals.append({'name': location_name, 'count': vaccine_count})
 
 
