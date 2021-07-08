@@ -113,6 +113,10 @@ def parse_vaccine_data(data):
     locations = data[0]['data']['rests']['businesses']['items']
     found_vaccines = False
 
+    if len(locations) < 50:
+        print_warning_log("Only {} locations in Naver's response; make sure response data is valid!"
+                          .format(len(locations)))
+
     for location in locations:
         try:
             vaccine_count = location['vaccineQuantity']['totalQuantity']
@@ -133,6 +137,10 @@ def parse_vaccine_data(data):
 
 def print_log(msg):
     logger.info("Run {}: {}".format(run_count, msg))
+
+
+def print_warning_log(msg):
+    logger.warning("Run {}: {}".format(run_count, msg))
 
 
 def trigger_pushover_notification(location, vaccine_count):
