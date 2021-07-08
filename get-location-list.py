@@ -49,7 +49,7 @@ def main():
         find_location(args.find)
     else:
         print_location_data()
-        print("Total locations: {}".format(hospitals.count()))
+        print("Total locations: {}".format(len(hospitals)))
 
 
 if __name__ == "__main__":
