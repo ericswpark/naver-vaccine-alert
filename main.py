@@ -137,19 +137,13 @@ def print_log(msg):
 
 def trigger_pushover_notification(location, vaccine_count):
     if pushover_notifications_enabled:
-        # Check vaccine type
         vaccine_type = location['vaccineQuantity']['list'][0]['vaccineType']
-        if vaccine_type == '화이자':
-            client.send_message("Found Pfizer vaccines at {}!\nAddress: {}\nVaccine count: {}"
-                                .format(location['name'], location['roadAddress'], vaccine_count), priority=1,
-                                url=get_redirect_url(location['id']), url_title="Go to location page")
-        else:
-            client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}\nVaccine type: {}"
-                                .format(location['name'], location['roadAddress'], vaccine_count, vaccine_type),
-                                url=get_redirect_url(location['id']), url_title="Go to location page")
+        client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}\nVaccine type: {}".format(
+            location['name'], location['roadAddress'], vaccine_count, vaccine_type),
+            url=get_naver_inapp_redirect_url(location['id']), url_title="Go to location page")
 
 
-def get_redirect_url(location_id):
+def get_naver_inapp_redirect_url(location_id):
     url = "https://m.place.naver.com/hospital/{}/home".format(location_id)
     return "naversearchapp://inappbrowser?url={}".format(urllib.parse.quote_plus(url))
 
