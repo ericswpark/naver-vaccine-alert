@@ -138,9 +138,10 @@ def print_log(msg):
 def trigger_pushover_notification(location, vaccine_count):
     if pushover_notifications_enabled:
         vaccine_type = location['vaccineQuantity']['list'][0]['vaccineType']
-        client.send_message("Found vaccines at {}!\nAddress: {}\nVaccine count: {}\nVaccine type: {}".format(
-            location['name'], location['roadAddress'], vaccine_count, vaccine_type),
-            url=get_naver_inapp_redirect_url(location['id']), url_title="Go to location page")
+        message = "{} has {} {} vaccines!\n\nAddress: {}".format(location['name'], vaccine_count, vaccine_type,
+                                                                 location['roadAddress'])
+        client.send_message(message=message, url=get_naver_inapp_redirect_url(location['id']),
+                            url_title="Go to location page")
 
 
 def get_naver_inapp_redirect_url(location_id):
