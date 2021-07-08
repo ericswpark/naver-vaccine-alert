@@ -172,6 +172,9 @@ def fetch_vaccine_info():
         except Exception as e:
             print_log("Warning: an error occurred while trying to parse the output.")
             logger.error(e)
+            # Print trace
+            import traceback
+            traceback.print_exc()
     else:
         print_log("There was a problem fetching from Naver's API on this run.")
 
