@@ -33,13 +33,14 @@ def print_location_data():
 
 def find_location(name):
     parse_response_data()
+    found_location = False
     for location in hospitals:
         if name in location['name']:
             print("Found location {}. Vaccine count: {}".format(location['name'], location['count']))
-            return
+            found_location = True
 
-    print("No location found.")
-    return
+    if not found_location:
+        print("No location found.")
 
 
 def main():
