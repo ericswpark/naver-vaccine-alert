@@ -116,7 +116,11 @@ def parse_vaccine_data(data):
     found_vaccines = False
 
     for location in locations:
-        vaccine_count = location['vaccineQuantity']['totalQuantity']
+        try:
+            vaccine_count = location['vaccineQuantity']['totalQuantity']
+        except TypeError:
+            # This location doesn't have any vaccines
+            continue
 
         if vaccine_count > 0:
             print_log("Found vaccine, location data:")
