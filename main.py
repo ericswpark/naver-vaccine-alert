@@ -143,6 +143,10 @@ def print_warning_log(msg):
     logger.warning("Run {}: {}".format(run_count, msg))
 
 
+def print_error_log(msg):
+    logger.error("Run {}: {}".format(run_count, msg))
+
+
 def trigger_pushover_notification(location, vaccine_count):
     if pushover_notifications_enabled:
         vaccine_type = location['vaccineQuantity']['list'][0]['vaccineType']
