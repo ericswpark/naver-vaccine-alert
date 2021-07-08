@@ -80,7 +80,14 @@ def main():
             elif val.lower() == 'h':
                 print_help()
             elif val.lower() == 'r' or not val:
-                fetch_vaccine_info()
+                try:
+                    fetch_vaccine_info()
+                except Exception as e:
+                    print_error_log("An error occurred while contacting Naver's servers.")
+                    logger.error(e)
+                    # Print trace
+                    import traceback
+                    traceback.print_exc()
                 run_count += 1
     finally:
         if ctx is not None:
