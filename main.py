@@ -179,13 +179,13 @@ def fetch_vaccine_info():
         try:
             parse_vaccine_data(r.json())
         except Exception as e:
-            print_log("Warning: an error occurred while trying to parse the output.")
+            print_error_log("An error occurred while trying to parse the output.")
             logger.error(e)
             # Print trace
             import traceback
             traceback.print_exc()
     else:
-        print_log("There was a problem fetching from Naver's API on this run.")
+        print_warning_log("There was a problem fetching from Naver's API on this run.")
 
 
 if __name__ == '__main__':
