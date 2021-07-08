@@ -24,7 +24,7 @@ client = Client(user_key=user_key, api_token=api_token)
 def main():
     message = input("Enter message you want to send: ")
     url = input("Enter URL you want to send: ")
-    client.send_message(message=message, url=url, priority=1)
+    client.send_message(message=message, url=url)
 
 
 if __name__ == '__main__':
