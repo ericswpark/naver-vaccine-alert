@@ -1,5 +1,11 @@
 # naver-vaccine-alert
 
+This is an old script that I made back in 2021 in order to get vaccinated against COVID-19, back when we had a vaccine shortage.
+
+The vaccine part is no longer relevant, but the script is my first attempt at GraphQL querying and I'm pretty pleased with how well it worked, so I'm open-sourcing it in the hopes that it helps someone else in the future.
+
+---
+
 Uses Naver's API to fetch leftover vaccine reservation list
 
 # Config
